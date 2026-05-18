@@ -1,0 +1,275 @@
+[
+  {
+    "id": 1,
+    "name": "Аэрогриль электрический 9 литров",
+    "price": 0,
+    "oldPrice": 11525,
+    "image": "img/aero.webp",
+    "category": "electronics",
+    "reviewsCount": 47,
+    "availableCount": 12,
+    "seller": "УютныйДом",
+    "sellerRating": 4.8,
+    "images": [
+      "img/aero.webp",
+      "img/aero2.webp",
+      "img/aero3.webp"
+    ],
+    "reviews": [
+      {
+        "author": "Анна К.",
+        "date": "15 мая 2026",
+        "rating": 5,
+        "text": "Благодарю продавца за такую стильную, чудесную помощницу. Красивая, аккуратная, занимает мало места. Удобное расположение меню, понятна и проста в использовании, мощность хорошая. Очень довольна покупкой.",
+        "photos": [
+          "img/aerofs.webp"
+        ]
+      },
+      {
+        "author": "Михаил Д.",
+        "date": "12 мая 2026",
+        "rating": 5,
+        "text": "Достаточно компактный аэрогриль, при этом ёмкая чаша. Лёгкий и стильный. Так же и на подарок очень подойдёт. В комплекте формы для запекания, рецепты. Мне нравится, я давно хотела аэрогриль,этот приглянулся. Вечером буду готовить",
+        "photos": [
+          "img/aerofs2.webp"
+        ]
+      },
+      {
+        "author": "Елена В.",
+        "date": "10 мая 2026",
+        "rating": 4,
+        "text": "Мне очень понравился, готовит картошку с курицей за 25 минут, пиццу 15 минут и многое другое, без масла вкусно и быстро",
+        "photos": [
+          "img/aerofs3.webp"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Средство от тараканов эффективное, мощный спрей без запаха",
+    "price": 0,
+    "oldPrice": 1011,
+    "image": "img/spray.webp",
+    "category": "home",
+    "reviewsCount": 2,
+    "availableCount": 5,
+    "seller": "HOLLYWOOD LIFE",
+    "sellerRating": 4.6,
+    "images": [
+      "img/spray.webp",
+      "img/spray2.webp"
+    ],
+    "reviews": [
+      {
+        "author": "Сергей П.",
+        "date": "14 мая 2026",
+        "rating": 5,
+        "text": "Средство оказалось очень эффективным. Во флаконе уже был насыпан порошок, развёл его с водой и распылил его в доме, спустя пару часов, результаты не заставил себя долго ждать, тараканы были уничтожены. Порадовали виниловые перчатки и подложки в комплекте. Покупкой остался доволен.",
+        "photos": [
+          "img/sprayfs.webp",
+          "img/sprayfs2.webp"
+        ]
+      },
+      {
+        "author": "Ольга М.",
+        "date": "11 мая 2026",
+        "rating": 5,
+        "text": "Получила бесплатно за отзыв. Качество превзошло ожидания!",
+        "photos": []
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Магний В6 витамины 120 капсул магне б 6",
+    "price": 0,
+    "oldPrice": 259,
+    "image": "img/mg.webp",
+    "category": "beauty",
+    "reviewsCount": 1,
+    "availableCount": 20,
+    "seller": "1WGroup",
+    "sellerRating": 4.9,
+    "images": [
+      "img/mg.webp",
+      "img/mg2.webp",
+      "img/mg3.webp",
+      "img/mg4.webp"
+    ],
+    "reviews": [
+      {
+        "author": "Марина С.",
+        "date": "16 мая 2026",
+        "rating": 5,
+        "text": "Все отлично, комфортно принимать",
+        "photos": [
+          "img/mgfs.webp"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Отпариватель ручной для одежды мощный",
+    "price": 0,
+    "oldPrice": 2628,
+    "image": "img/par.webp",
+    "category": "electronics",
+    "reviewsCount": 156,
+    "availableCount": 8,
+    "seller": "TomTech",
+    "sellerRating": 4.7,
+    "images": [
+      "img/par.webp",
+      "img/par2.webp",
+      "img/par3.webp"
+    ],
+    "reviews": [
+      {
+        "author": "Кристина Л.",
+        "date": "17 мая 2026",
+        "rating": 5,
+        "text": "Отпаривает хорошо, попробовала погладить детскую футболочку очень мятую, он справился быстро. Такой прям мощный отпариватель, у него сильный паровой удар, и что понравилось он с подставкой и стаканчиком мерным и нагрелся он быстро.",
+        "photos": [
+          "img/parfs.webp",
+          "img/parfs2.webp"
+        ]
+      },
+      {
+        "author": "Алина Р.",
+        "date": "13 мая 2026",
+        "rating": 4,
+        "text": "Только пробую пользоваться первый раз) дополню отзыв позже. Пока на первый взгляд все прекрасно от дизайна и комплектации до упаковки. Надеюсь и в деле не подведет)",
+        "photos": [
+          "img/parfs3.webp"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Смартфон iPhone 17 Pro Max 256GB Silver eSIM",
+    "price": 0,
+    "oldPrice": 101790,
+    "image": "img/iphone.webp",
+    "category": "electronics",
+    "reviewsCount": 5,
+    "availableCount": 1,
+    "seller": "BabyWorld",
+    "sellerRating": 4.8,
+    "images": [
+      "img/iphone.webp",
+      "img/iphone2.webp"
+    ],
+    "reviews": [
+      {
+        "author": "Наталья Г.",
+        "date": "15 мая 2026",
+        "rating": 5,
+        "text": "Пришло быстро , раньше на дней 5. Все работает, упаковано было хорошо. Довольны. Спасибо.",
+        "photos": [
+          "img/iphonefs.webp"
+        ]
+      },
+      {
+        "author": "Полина В.",
+        "date": "12 мая 2026",
+        "rating": 5,
+        "text": "Спасибо, всё хорошо",
+        "photos": [
+          "img/iphonefs2.webp"
+        ]
+      },
+      {
+        "author": "Надира М.",
+        "date": "12 мая 2026",
+        "rating": 5,
+        "text": "Заказ пришёл раньше срока. Телефон новый, запечатаный . Положили специально в коробку с пыпырышками заклееными и с надписью осторожно хрупкий товар. Очень благодарно продавцу открыли все совпало работает",
+        "photos": [
+          "img/iphonefs3.webp"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Креатин моногидрат порошок микронизированный creatine",
+    "price": 0,
+    "oldPrice": 2190,
+    "image": "img/creatin.webp",
+    "category": "sport",
+    "reviewsCount": 1,
+    "availableCount": 15,
+    "seller": "FitLife Store",
+    "sellerRating": 4.5,
+    "images": [
+      "img/creatin.webp",
+      "img/creatin2.webp"
+    ],
+    "reviews": [
+      {
+        "author": "Дмитрий Н.",
+        "date": "14 мая 2026",
+        "rating": 5,
+        "text": "Начал тренить в зале, друзья посоветовали креатин. Рабочая вещь, тренировки стали другими! Не ждешь уже третье повторение, когда силы закончатся, а спокойно делаешь запланированные пять-шесть. Восстанавливаешься быстрее, мышцы растут. Работает не с первого дня, но спустя время реально чувствуешь эффект. Соотношение цены качества топ, нормальная растворимость удобная мерная ложка. Заказал уже вторую",
+        "photos": [
+          "img/creatinfs.webp"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Смартфон Note 60X 3 64 ГБ, черный",
+    "price": 0,
+    "oldPrice": 5448,
+    "image": "img/note.webp",
+    "category": "electronics",
+    "reviewsCount": 1,
+    "availableCount": 7,
+    "seller": "КиберМаркет",
+    "sellerRating": 4.7,
+    "images": [
+      "img/note.webp",
+      "img/note2.webp"
+    ],
+    "reviews": [
+      {
+        "author": "Игорь В.",
+        "date": "16 мая 2026",
+        "rating": 5,
+        "text": "Всё отлично, всё работает.Ребенок доволен",
+        "photos": [
+          "img/notefs.webp"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Люстра светодиодная потолочная",
+    "price": 0,
+    "oldPrice": 1590,
+    "image": "img/lustra.webp",
+    "category": "home",
+    "reviewsCount": 1,
+    "availableCount": 18,
+    "seller": "TechPulse",
+    "sellerRating": 4.9,
+    "images": [
+      "img/lustra.webp",
+      "img/lustra2.webp",
+      "img/lustra3.webp"
+    ],
+    "reviews": [
+      {
+        "author": "Виктория А.",
+        "date": "12 мая 2026",
+        "rating": 5,
+        "text": "Очень хорошая люстра. Легко собирается и устанавливается. Светит хорошо. Имеет три режима, что очень удобно в ночное время. Спасибо продавцу за быструю и качественную доставку. К покупке однозначно рекомендую!",
+        "photos": []
+      }
+    ]
+  }
+]

