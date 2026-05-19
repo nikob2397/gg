@@ -22,6 +22,14 @@
             --shadow: rgba(0, 0, 0, 0.5);
         }
 
+        @font-face {
+            font-family: 'logo';
+            src: url('logo.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -935,7 +943,7 @@
 
     <header class="header">
         <div class="header-top">
-            <img src="img/logo.png" alt="WB Отзывы" style="height: 40px; width: auto; object-fit: contain;">
+            <span style="font-family: 'logo', sans-serif; font-size: 28px; font-weight: 800; background: linear-gradient(135deg, #fff, var(--accent-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">wb rate</span>
             <div class="city-selector" id="citySelector" onclick="openCityModal()">
                 <svg class="city-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
