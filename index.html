@@ -955,9 +955,9 @@
         </div>
     </header>
 
-    <div style="padding: 16px; background: linear-gradient(135deg, rgba(203,17,171,0.1), rgba(203,17,171,0.05)); border-bottom: 1px solid var(--border);">
+    <div style="padding: 16px; background: linear-gradient(135deg, #1a1a1a, rgba(203,17,171,0)); border-bottom: 1px solid var(--border);">
         <p style="font-size: 14px; line-height: 1.6; color: var(--text-secondary); margin: 0;">
-            Здесь собраны продавцы которые готовы отправить свой товар ради отзыва.
+            Здесь собраны продавцы, которые готовы отправить свой товар ради отзыва.
         </p>
         <p style="font-size: 14px; line-height: 1.6; color: var(--text-secondary); margin: 8px 0 0 0;">
             Отзывы помогают начинающим продавцам пробиться среди тысяч конкурентов — а вам дают возможность протестировать новинки без всяких затрат.
@@ -1177,7 +1177,7 @@
                         </button>
                     </div>
                     <div class="product-info">
-                        <div class="product-price">0 ₽ <span>${product.oldPrice} ₽</span></div>
+                        <div class="product-price">На оценку <span>${product.oldPrice} ₽</span></div>
                         <div class="product-name">${product.name}</div>
                         <div class="product-meta">
                             <div class="meta-row">
@@ -1215,7 +1215,7 @@
                 </div>
                 <div class="modal-details">
                     <div class="modal-price-row">
-                        <div class="modal-price">0 ₽</div>
+                        <div class="modal-price">На оценку</div>
                         <div class="modal-price-old">${product.oldPrice} ₽</div>
                         <div class="modal-discount">-100%</div>
                     </div>
@@ -1346,8 +1346,8 @@
 
                     // Hide footer buttons since we now have the CTA in the body
                     document.querySelector('.modal-footer').style.display = 'none';
-                }, 2000);
-            }, 1500);
+                }, 6000);
+            }, 2500);
         }
 
         function showToast(message) {
